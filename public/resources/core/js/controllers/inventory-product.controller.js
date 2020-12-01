@@ -190,6 +190,7 @@
         var locations = [];
         var applicationId = [];
         var hasApplicationId = false;
+        var hasFiwareService = false;
 
         vm.item = {};
         vm.offerings = [];
@@ -218,7 +219,7 @@
         vm.refreshToken = "";
         vm.token = retrieveToken();
         vm.sla = "";
-    
+
         function tokenSupported() {
             // To be updated when functionality available in Charging backend
             return false;
@@ -307,7 +308,7 @@
             var hasMedia = false;
             var hasLocation = false;
             var hasAssetType = false;
-            
+
 
             // Check if the product is digital
             if (characteristics) {
@@ -330,6 +331,10 @@
                         hasApplicationId = true;
                         applicationId = charact.productSpecCharacteristicValue[0].value;
                     }
+                    else
+                    if (charact.name.toLowerCase() == 'fiware-service') {
+                        hasFiwareService = true;
+                    }
                 }
             }
 
@@ -344,6 +349,35 @@
             return digital;
         }
 
+        function writeDocument (location, informationWindow) {
+            informationWindow.document.write("<h2>Instructions</h2>");
+            informationWindow.document.write("<p>In order to work with your purchased API access, please follow these steps.</p>");
+            informationWindow.document.write("<p>If you do not have an HTTP Client we recommend you to download <a target='_blank' href='https://www.postman.com/downloads/'>Postman</a>.</p>");
+            informationWindow.document.write("</br>");
+
+            informationWindow.document.write("<p><strong>The FIWARE Keyrock complies with the OAuth2 standard</strong></p>");
+            informationWindow.document.write("<p>Please get your Bearer Token for an authorized access as described here: </p>");
+            informationWindow.document.write("<p>Open Keyrock in your browser and copy the hostname part of the URL (e.g. keyrock.mydomain.com). If you use encrypted HTTP connections on your web page, you should prepend the hostname with 'https://' (e.g. https://keyrock.mydomain.com).</p>");
+            informationWindow.document.write("<p>Paste the hostname into your HTTP Client and append the sub path <strong>/oauth2/password</strong> to build the URL of the Keyrock API endpoint (e.g. https://keyrock.mydomain.com/oauth2/password).</p>");
+            informationWindow.document.write("</br>");
+
+            informationWindow.document.write("<p><strong>HTTP method</strong>: <strong>POST</strong></p>");
+            informationWindow.document.write("<p>You must pass the following parameters as an URL encoded string to the request body:</p>");
+            informationWindow.document.write("<p>grant_type=password&username=<strong>your-email</strong>&password=<strong>your-password</strong></p>");
+            informationWindow.document.write("</br>");
+
+            informationWindow.document.write("<p><strong>HTTP headers</strong>:</p>");
+            informationWindow.document.write("<p>Content-Type: application/x-www-form-urlencoded</p>");
+            informationWindow.document.write("<p>Authorization: Basic <strong>base64(client_id:client_secret)</strong></p>");
+            informationWindow.document.write("<p>The Authorization Basic header is built with the Client ID and Client Secret credentials provided by the FIWARE Keyrock Applicaton <strong>API Access</strong>.</p>");
+            informationWindow.document.write("<p>The Client ID and Client Secret are concatenated and base64-encoded - don't miss the separating colon (:) in the middle.</p>");
+            informationWindow.document.write("<p>The resulting string is part of the Authorization header value, e.g. Authorization: Basic NjQzNDM4N2UtYzJ2Ny00ZWYwLTgyOWItNGU4NDY3ZjRmMGU0OjRkZDYzYjBmLTFlM2ItNG5lYS05MTQ1LWViNGRhNDhmYTljNQ==</p>");
+            informationWindow.document.write("</br>");
+
+            informationWindow.document.write("<p>Upon successful completion of the request, you will receive a <strong>Bearer Token</strong> that authorizes you to access your purchased API endpoint.</p>");
+            informationWindow.document.close();
+        }
+
         function downloadAsset() {
             locations.forEach(function(location) {
                 // Check if the file is internal or not
@@ -353,7 +387,12 @@
                         $window.open(url, '_blank');
                     });
                 } else {
-                    $window.open(location, '_blank');
+                    if(hasFiwareService === true) {
+                        let informationWindow = $window.open("", "new window", "width=1200,height=800");
+                        writeDocument(location, informationWindow);
+                    } else {
+                        $window.open(location, '_blank');
+                    }
                 }
             });
         }
@@ -510,7 +549,7 @@
                     vm.token = "Token expired";
                 else
                     vm.token = tokenBody.authToken;
-                vm.refreshToken = tokenBody.refreshToken;    
+                vm.refreshToken = tokenBody.refreshToken;
                 return vm.token;
             }, function (response) {
                 load = false;
