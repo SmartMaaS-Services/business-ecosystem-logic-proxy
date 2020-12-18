@@ -353,28 +353,16 @@
             informationWindow.document.write("<h2>Instructions</h2>");
             informationWindow.document.write("<p>In order to work with your purchased API access, please follow these steps.</p>");
             informationWindow.document.write("<p>If you do not have an HTTP Client we recommend you to download <a target='_blank' href='https://www.postman.com/downloads/'>Postman</a>.</p>");
+            informationWindow.document.write("<p>You will need a <strong>Bearer Token</strong> to use the asset you have purchased. This token allows you to make API calls.</p>");
             informationWindow.document.write("</br>");
 
             informationWindow.document.write("<p><strong>The FIWARE Keyrock complies with the OAuth2 standard</strong></p>");
             informationWindow.document.write("<p>Please get your Bearer Token for an authorized access as described here: </p>");
-            informationWindow.document.write("<p>Open Keyrock in your browser and copy the hostname part of the URL (e.g. keyrock.mydomain.com). If you use encrypted HTTP connections on your web page, you should prepend the hostname with 'https://' (e.g. https://keyrock.mydomain.com).</p>");
-            informationWindow.document.write("<p>Paste the hostname into your HTTP Client and append the sub path <strong>/oauth2/password</strong> to build the URL of the Keyrock API endpoint (e.g. https://keyrock.mydomain.com/oauth2/password).</p>");
-            informationWindow.document.write("</br>");
+            informationWindow.document.write("<p>Visit the APInf dashboard (e.g. apis.mydomain.com). If you use encrypted HTTP connections on your web page, you should prepend the hostname with 'https://' (e.g. https://apis.mydomain.com).</p>");
+            informationWindow.document.write("<p>Login and click on <strong>Tenants</strong> in the navigation header.</p>");
+            informationWindow.document.write("<p>On the right-hand side you will find the menu item <strong>Authorization</strong> for the tenant authorization.</p>");
+            informationWindow.document.write("<p>Click on <strong>Authorization</strong> and follow please the instructions there to obtain your <strong>Bearer Token</strong> that authorizes you to access your purchased API endpoint. <strong>Copy the token and save it to your documents</strong>.</p>");
 
-            informationWindow.document.write("<p><strong>HTTP method</strong>: <strong>POST</strong></p>");
-            informationWindow.document.write("<p>You must pass the following parameters as an URL encoded string to the request body:</p>");
-            informationWindow.document.write("<p>grant_type=password&username=<strong>your-email</strong>&password=<strong>your-password</strong></p>");
-            informationWindow.document.write("</br>");
-
-            informationWindow.document.write("<p><strong>HTTP headers</strong>:</p>");
-            informationWindow.document.write("<p>Content-Type: application/x-www-form-urlencoded</p>");
-            informationWindow.document.write("<p>Authorization: Basic <strong>base64(client_id:client_secret)</strong></p>");
-            informationWindow.document.write("<p>The Authorization Basic header is built with the Client ID and Client Secret credentials provided by the FIWARE Keyrock Applicaton <strong>API Access</strong>.</p>");
-            informationWindow.document.write("<p>The Client ID and Client Secret are concatenated and base64-encoded - don't miss the separating colon (:) in the middle.</p>");
-            informationWindow.document.write("<p>The resulting string is part of the Authorization header value, e.g. Authorization: Basic NjQzNDM4N2UtYzJ2Ny00ZWYwLTgyOWItNGU4NDY3ZjRmMGU0OjRkZDYzYjBmLTFlM2ItNG5lYS05MTQ1LWViNGRhNDhmYTljNQ==</p>");
-            informationWindow.document.write("</br>");
-
-            informationWindow.document.write("<p>Upon successful completion of the request, you will receive a <strong>Bearer Token</strong> that authorizes you to access your purchased API endpoint.</p>");
             informationWindow.document.close();
         }
 
