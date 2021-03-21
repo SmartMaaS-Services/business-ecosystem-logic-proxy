@@ -15,6 +15,9 @@
 
 This is the code repository for the Business Ecosystem Logic Proxy, one of the components that made up the [Business API Ecosystem GE](https://github.com/FIWARE-TMForum/Business-API-Ecosystem). The Business API Ecosystem is part of [FIWARE](https://www.fiware.org), and has been developed in collaboration with the [TM Forum](https://www.tmforum.org/).
 
+> Attention: This repository has been customized for [Smart Platform Services](https://github.com/SmartMaaS-Services/dev.smartmaas.services). 
+
+
 Any feedback is highly welcome, including bugs, typos or things you think should be included but aren't. You can use [GitHub Issues](https://github.com/FIWARE-TMForum/business-ecosystem-logic-proxy/issues/new) to provide feedback.
 
 # GEi Overal Description
